@@ -26,7 +26,9 @@ import { toast } from "sonner";
 export type StateType = { messages: Message[]; ui?: UIMessage[] };
 
 const useTypedStream = useStream<
+
   StateType,
+  
   {
     UpdateType: {
       messages?: Message[] | Message | string;
@@ -121,8 +123,8 @@ const StreamSession = ({
 };
 
 // Default values for the form
-const DEFAULT_API_URL = "http://localhost:2024";
-const DEFAULT_ASSISTANT_ID = "agent";
+const DEFAULT_API_URL = "https://apiagentfaceapp-production.up.railway.app";
+const DEFAULT_ASSISTANT_ID = "naturgy";
 
 export const StreamProvider: React.FC<{ children: ReactNode }> = ({
   children,
@@ -143,11 +145,18 @@ export const StreamProvider: React.FC<{ children: ReactNode }> = ({
   // For API key, use localStorage with env var fallback
   const [apiKey, _setApiKey] = useState(() => {
     const storedKey = getApiKey();
+    console.log(`Stored API key: ${storedKey}`);
+    
     return storedKey || "";
   });
 
+  const openai_api_key = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
+  
+
   const setApiKey = (key: string) => {
-    window.localStorage.setItem("lg:chat:apiKey", key);
+    window.localStorage.setItem("lg:chat:apiKey", openai_api_key || "apiKey");
+    console.log(`API key set to ${key}`);
+    
     _setApiKey(key);
   };
 
@@ -183,7 +192,7 @@ export const StreamProvider: React.FC<{ children: ReactNode }> = ({
               const apiKey = formData.get("apiKey") as string;
 
               setApiUrl(apiUrl);
-              setApiKey(apiKey);
+              setApiKey("apiKey");
               setAssistantId(assistantId);
 
               form.reset();

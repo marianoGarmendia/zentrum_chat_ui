@@ -77,29 +77,29 @@ function ScrollToBottom(props: { className?: string }) {
   );
 }
 
-function OpenGitHubRepo() {
-  return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <a
-            href="https://github.com/langchain-ai/agent-chat-ui"
-            target="_blank"
-            className="flex items-center justify-center"
-          >
-            <GitHubSVG
-              width="24"
-              height="24"
-            />
-          </a>
-        </TooltipTrigger>
-        <TooltipContent side="left">
-          <p>Open GitHub repo</p>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
-  );
-}
+// function OpenGitHubRepo() {
+//   return (
+//     <TooltipProvider>
+//       <Tooltip>
+//         <TooltipTrigger asChild>
+//           <a
+//             href="https://github.com/langchain-ai/agent-chat-ui"
+//             target="_blank"
+//             className="flex items-center justify-center"
+//           >
+//             <GitHubSVG
+//               width="24"
+//               height="24"
+//             />
+//           </a>
+//         </TooltipTrigger>
+//         <TooltipContent side="left">
+//           <p>Open GitHub repo</p>
+//         </TooltipContent>
+//       </Tooltip>
+//     </TooltipProvider>
+//   );
+// }
 
 export function Thread() {
   const [threadId, setThreadId] = useQueryState("threadId");
@@ -114,12 +114,44 @@ export function Thread() {
   const [input, setInput] = useState("");
   const [firstTokenReceived, setFirstTokenReceived] = useState(false);
   const isLargeScreen = useMediaQuery("(min-width: 1024px)");
-
+const firstMessageRef = useRef(0);
   const stream = useStreamContext();
   const messages = stream.messages;
   const isLoading = stream.isLoading;
 
   const lastError = useRef<string | undefined>(undefined);
+
+  useEffect(() => {
+    if(firstMessageRef.current !== 0) return
+    const newHumanMessage: Message = {
+      id:  `do-not-render-${uuidv4()}`,
+      type: "human",
+      content: "hola",
+    };
+
+
+    const toolMessages = ensureToolCallsHaveResponses(stream.messages);
+    stream.submit(
+      { messages: [...toolMessages, newHumanMessage] },
+      
+      {
+        config:{configurable:{user_id: 77 , api_key: "123"}},
+
+        streamMode: ["values"],
+        optimisticValues: (prev) => ({
+          ...prev,
+          messages: [
+            ...(prev.messages ?? []),
+            ...toolMessages,
+            newHumanMessage,
+          ],
+        }),
+      },
+    );
+    firstMessageRef.current = 1
+    setInput("");
+
+  },[firstMessageRef])
 
   useEffect(() => {
     if (!stream.error) {
@@ -177,7 +209,9 @@ export function Thread() {
     const toolMessages = ensureToolCallsHaveResponses(stream.messages);
     stream.submit(
       { messages: [...toolMessages, newHumanMessage] },
+     
       {
+        config:{configurable:{user_id: 77}},
         streamMode: ["values"],
         optimisticValues: (prev) => ({
           ...prev,
@@ -274,7 +308,7 @@ export function Thread() {
               )}
             </div>
             <div className="absolute top-2 right-4 flex items-center">
-              <OpenGitHubRepo />
+              {/* <OpenGitHubRepo /> */}
             </div>
           </div>
         )}
@@ -282,7 +316,7 @@ export function Thread() {
           <div className="relative z-10 flex items-center justify-between gap-3 p-2">
             <div className="relative flex items-center justify-start gap-2">
               <div className="absolute left-0 z-10">
-                {(!chatHistoryOpen || !isLargeScreen) && (
+                {/* {(!chatHistoryOpen || !isLargeScreen) && (
                   <Button
                     className="hover:bg-gray-100"
                     variant="ghost"
@@ -294,9 +328,9 @@ export function Thread() {
                       <PanelRightClose className="size-5" />
                     )}
                   </Button>
-                )}
+                )} */}
               </div>
-              <motion.button
+              {/* <motion.button
                 className="flex cursor-pointer items-center gap-2"
                 onClick={() => setThreadId(null)}
                 animate={{
@@ -307,22 +341,22 @@ export function Thread() {
                   stiffness: 300,
                   damping: 30,
                 }}
-              >
-                <LangGraphLogoSVG
+              > */}
+                {/* <LangGraphLogoSVG
                   width={32}
                   height={32}
-                />
+                /> */}
                 <span className="text-xl font-semibold tracking-tight">
-                  Agent Chat
+                  FaceApp
                 </span>
-              </motion.button>
+              {/* </motion.button> */}
             </div>
 
             <div className="flex items-center gap-4">
               <div className="flex items-center">
-                <OpenGitHubRepo />
+                {/* <OpenGitHubRepo /> */}
               </div>
-              <TooltipIconButton
+              {/* <TooltipIconButton
                 size="lg"
                 className="p-4"
                 tooltip="New thread"
@@ -330,7 +364,7 @@ export function Thread() {
                 onClick={() => setThreadId(null)}
               >
                 <SquarePen className="size-5" />
-              </TooltipIconButton>
+              </TooltipIconButton> */}
             </div>
 
             <div className="from-background to-background/0 absolute inset-x-0 top-full h-5 bg-gradient-to-b" />
@@ -383,11 +417,12 @@ export function Thread() {
             footer={
               <div className="sticky bottom-0 flex flex-col items-center gap-8 bg-white">
                 {!chatStarted && (
-                  <div className="flex items-center gap-3">
-                    <LangGraphLogoSVG className="h-8 flex-shrink-0" />
+                  <div className="flex flex-col items-center gap-3">
+                    {/* <LangGraphLogoSVG className="h-8 flex-shrink-0" /> */}
                     <h1 className="text-2xl font-semibold tracking-tight">
-                      Agent Chat
+                      Agent IA - FaceApp
                     </h1>
+                    <p>Gestión de suministro de Gas Naturgy</p>
                   </div>
                 )}
 
