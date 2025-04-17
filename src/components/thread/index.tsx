@@ -107,10 +107,11 @@ export function Thread() {
     "chatHistoryOpen",
     parseAsBoolean.withDefault(false),
   );
-  const [hideToolCalls, setHideToolCalls] = useQueryState(
-    "hideToolCalls",
-    parseAsBoolean.withDefault(false),
-  );
+  // const [hideToolCalls, setHideToolCalls] = useQueryState(
+  //   "hideToolCalls",
+  //   parseAsBoolean.withDefault(false),
+  // );
+  const [hideToolCalls, setHideToolCalls] = useState(true);
   const [input, setInput] = useState("");
   const [firstTokenReceived, setFirstTokenReceived] = useState(false);
   const isLargeScreen = useMediaQuery("(min-width: 1024px)");
@@ -122,34 +123,48 @@ const firstMessageRef = useRef(0);
   const lastError = useRef<string | undefined>(undefined);
 
   useEffect(() => {
-    if(firstMessageRef.current !== 0) return
-    const newHumanMessage: Message = {
-      id:  `do-not-render-${uuidv4()}`,
-      type: "human",
-      content: "hola",
-    };
+    console.log("hide tool calls", hideToolCalls);
+    
+      // setHideToolCalls(false);
+    
+  }, [hideToolCalls, setHideToolCalls]);
+
+ 
 
 
-    const toolMessages = ensureToolCallsHaveResponses(stream.messages);
-    stream.submit(
-      { messages: [...toolMessages, newHumanMessage] },
-      
-      {
-        config:{configurable:{user_id: 77 , api_key: "123"}},
-
-        streamMode: ["values"],
-        optimisticValues: (prev) => ({
-          ...prev,
-          messages: [
-            ...(prev.messages ?? []),
-            ...toolMessages,
-            newHumanMessage,
-          ],
-        }),
-      },
-    );
-    firstMessageRef.current = 1
-    setInput("");
+  
+    
+    useEffect(() => {
+      const timer = setTimeout(() => {
+        if (firstMessageRef.current !== 0) return;
+  
+        const newHumanMessage: Message = {
+          id: `do-not-render-${uuidv4()}`,
+          type: "human",
+          content: "hola",
+        };
+  
+        const toolMessages = ensureToolCallsHaveResponses(stream.messages);
+        stream.submit(
+          { messages: [...toolMessages, newHumanMessage] },
+          {
+            config: { configurable: { user_id: 77, api_key: "123" } },
+            streamMode: ["values"],
+            optimisticValues: (prev) => ({
+              ...prev,
+              messages: [
+                ...(prev.messages ?? []),
+                ...toolMessages,
+                newHumanMessage,
+              ],
+            }),
+          }
+        );
+        firstMessageRef.current = 1;
+        setInput("");
+      }, 2000); // Espera de 1 segundo
+  
+      return () => clearTimeout(timer); // Limpieza del temporizador al desmontar
 
   },[firstMessageRef])
 
@@ -449,14 +464,14 @@ const firstMessageRef = useRef(0);
                           form?.requestSubmit();
                         }
                       }}
-                      placeholder="Type your message..."
+                      placeholder="Escribe tu mensaje..."
                       className="field-sizing-content resize-none border-none bg-transparent p-3.5 pb-0 shadow-none ring-0 outline-none focus:ring-0 focus:outline-none"
                     />
 
                     <div className="flex items-center justify-between p-2 pt-4">
                       <div>
                         <div className="flex items-center space-x-2">
-                          <Switch
+                          {/* <Switch
                             id="render-tool-calls"
                             checked={hideToolCalls ?? false}
                             onCheckedChange={setHideToolCalls}
@@ -466,7 +481,7 @@ const firstMessageRef = useRef(0);
                             className="text-sm text-gray-600"
                           >
                             Hide Tool Calls
-                          </Label>
+                          </Label> */}
                         </div>
                       </div>
                       {stream.isLoading ? (
