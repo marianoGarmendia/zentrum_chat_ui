@@ -125,7 +125,7 @@ const firstMessageRef = useRef(0);
   useEffect(() => {
     console.log("hide tool calls", hideToolCalls);
     
-      setHideToolCalls(true);
+      setHideToolCalls(false);
     
   }, [hideToolCalls, setHideToolCalls]);
 

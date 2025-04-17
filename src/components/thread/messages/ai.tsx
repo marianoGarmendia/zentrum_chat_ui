@@ -82,7 +82,7 @@ export function AssistantMessage({
   //   parseAsBoolean.withDefault(true),
   // );
 
-  const [hideToolCalls, setHideToolCalls] = useState(true)
+  const [hideToolCalls, setHideToolCalls] = useState(false)
 
   const thread = useStreamContext();
   const isLastMessage =
