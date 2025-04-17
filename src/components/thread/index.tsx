@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 import { ReactNode, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { Loader2 } from 'lucide-react';
 import { useStreamContext } from "@/providers/Stream";
 import { useState, FormEvent } from "react";
 import { Button } from "../ui/button";
@@ -107,10 +108,15 @@ export function Thread() {
     "chatHistoryOpen",
     parseAsBoolean.withDefault(false),
   );
+  const [reference, setReference] = useQueryState(
+    "reference",
+    
+  );
   // const [hideToolCalls, setHideToolCalls] = useQueryState(
   //   "hideToolCalls",
   //   parseAsBoolean.withDefault(false),
   // );
+  const [showinputField, setShowinputField] = useState(false);
   const [hideToolCalls, setHideToolCalls] = useState(true);
   const [input, setInput] = useState("");
   const [firstTokenReceived, setFirstTokenReceived] = useState(false);
@@ -131,7 +137,8 @@ const firstMessageRef = useRef(0);
 
  
 
-
+    
+    
   
     
     useEffect(() => {
@@ -162,7 +169,8 @@ const firstMessageRef = useRef(0);
         );
         firstMessageRef.current = 1;
         setInput("");
-      }, 2000); // Espera de 1 segundo
+        setShowinputField(true)
+      }, 5000); // Espera de 1 segundo
   
       return () => clearTimeout(timer); // Limpieza del temporizador al desmontar
 
@@ -214,7 +222,7 @@ const firstMessageRef = useRef(0);
     e.preventDefault();
     if (!input.trim() || isLoading) return;
     setFirstTokenReceived(false);
-
+   
     const newHumanMessage: Message = {
       id: uuidv4(),
       type: "human",
@@ -226,7 +234,7 @@ const firstMessageRef = useRef(0);
       { messages: [...toolMessages, newHumanMessage] },
      
       {
-        config:{configurable:{user_id: 77}},
+        config:{configurable:{user_id: 77, reference: reference }},
         streamMode: ["values"],
         optimisticValues: (prev) => ({
           ...prev,
@@ -429,22 +437,42 @@ const firstMessageRef = useRef(0);
                 )}
               </>
             }
+
+
+           
+
             footer={
               <div className="sticky bottom-0 flex flex-col items-center gap-8 bg-white">
-                {!chatStarted && (
+                
+                {/* {!chatStarted && (
                   <div className="flex flex-col items-center gap-3">
-                    {/* <LangGraphLogoSVG className="h-8 flex-shrink-0" /> */}
+                   
                     <h1 className="text-2xl font-semibold tracking-tight">
                       Agent IA - FaceApp
                     </h1>
                     <p>Gestión de suministro de Gas Naturgy</p>
                   </div>
-                )}
+                )} */}
 
                 <ScrollToBottom className="animate-in fade-in-0 zoom-in-95 absolute bottom-full left-1/2 mb-4 -translate-x-1/2" />
-
-                <div className="bg-muted relative z-10 mx-auto mb-8 w-full max-w-3xl rounded-2xl border shadow-xs">
-                  <form
+                
+               
+                  { !showinputField ? (
+                    <div className="sticky bottom-0 flex flex-col items-center gap-8 bg-white">
+                      <div className="flex flex-col items-center gap-3">
+                     
+                      <h1 className="text-2xl font-semibold text-center tracking-tight">
+                        Agent IA - FaceApp
+                      </h1>
+                      <p className="text-xl my-2 text-center">Gestión de suministro de Gas Naturgy</p>
+                      <p className="text-center">En un momento un asistente atenderá tu solicitud</p>
+                      <div><LoaderCircle  className="h-4 w-4 animate-spin"/></div>
+                    </div>
+                    
+                    </div>
+                  ):(
+                    <div className="bg-muted relative z-10 mx-auto mb-8 w-full max-w-3xl rounded-2xl border shadow-xs">
+                    <form
                     onSubmit={handleSubmit}
                     className="mx-auto grid max-w-3xl grid-rows-[1fr_auto] gap-2"
                   >
@@ -471,17 +499,7 @@ const firstMessageRef = useRef(0);
                     <div className="flex items-center justify-between p-2 pt-4">
                       <div>
                         <div className="flex items-center space-x-2">
-                          {/* <Switch
-                            id="render-tool-calls"
-                            checked={hideToolCalls ?? false}
-                            onCheckedChange={setHideToolCalls}
-                          />
-                          <Label
-                            htmlFor="render-tool-calls"
-                            className="text-sm text-gray-600"
-                          >
-                            Hide Tool Calls
-                          </Label> */}
+                        
                         </div>
                       </div>
                       {stream.isLoading ? (
@@ -503,7 +521,9 @@ const firstMessageRef = useRef(0);
                       )}
                     </div>
                   </form>
-                </div>
+                  </div>
+                  ) }
+                
               </div>
             }
           />
