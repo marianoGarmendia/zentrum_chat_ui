@@ -129,9 +129,9 @@ const firstMessageRef = useRef(0);
   const lastError = useRef<string | undefined>(undefined);
 
   useEffect(() => {
-    console.log("hide tool calls", hideToolCalls);
+    // console.log("hide tool calls", hideToolCalls);
     
-      setHideToolCalls(false);
+      setHideToolCalls(true);
     
   }, [hideToolCalls, setHideToolCalls]);
 
