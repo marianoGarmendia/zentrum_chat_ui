@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 import { ReactNode, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { Loader2 } from 'lucide-react';
+import { Loader2 } from "lucide-react";
 import { useStreamContext } from "@/providers/Stream";
 import { useState, FormEvent } from "react";
 import { Button } from "../ui/button";
@@ -15,6 +15,8 @@ import {
 } from "@/lib/ensure-tool-responses";
 import { LangGraphLogoSVG } from "../icons/langgraph";
 import { TooltipIconButton } from "./tooltip-icon-button";
+import Image from "next/image";
+
 import {
   ArrowDown,
   LoaderCircle,
@@ -36,6 +38,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
+import * as perfil_image from "../../../assets/agent_perfil.jpeg";
 
 function StickyToBottomContent(props: {
   content: ReactNode;
@@ -108,10 +111,7 @@ export function Thread() {
     "chatHistoryOpen",
     parseAsBoolean.withDefault(false),
   );
-  const [reference, setReference] = useQueryState(
-    "reference",
-    
-  );
+  const [reference, setReference] = useQueryState("reference");
   // const [hideToolCalls, setHideToolCalls] = useQueryState(
   //   "hideToolCalls",
   //   parseAsBoolean.withDefault(false),
@@ -121,7 +121,7 @@ export function Thread() {
   const [input, setInput] = useState("");
   const [firstTokenReceived, setFirstTokenReceived] = useState(false);
   const isLargeScreen = useMediaQuery("(min-width: 1024px)");
-const firstMessageRef = useRef(0);
+  const firstMessageRef = useRef(0);
   const stream = useStreamContext();
   const messages = stream.messages;
   const isLoading = stream.isLoading;
@@ -130,51 +130,43 @@ const firstMessageRef = useRef(0);
 
   useEffect(() => {
     // console.log("hide tool calls", hideToolCalls);
-    
-      setHideToolCalls(true);
-    
+
+    setHideToolCalls(true);
   }, [hideToolCalls, setHideToolCalls]);
 
- 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (firstMessageRef.current !== 0) return;
 
-    
-    
-  
-    
-    useEffect(() => {
-      const timer = setTimeout(() => {
-        if (firstMessageRef.current !== 0) return;
-  
-        const newHumanMessage: Message = {
-          id: `do-not-render-${uuidv4()}`,
-          type: "human",
-          content: "hola",
-        };
-  
-        const toolMessages = ensureToolCallsHaveResponses(stream.messages);
-        stream.submit(
-          { messages: [...toolMessages, newHumanMessage] },
-          {
-            config: { configurable: { user_id: 77, api_key: "123" } },
-            streamMode: ["values"],
-            optimisticValues: (prev) => ({
-              ...prev,
-              messages: [
-                ...(prev.messages ?? []),
-                ...toolMessages,
-                newHumanMessage,
-              ],
-            }),
-          }
-        );
-        firstMessageRef.current = 1;
-        setInput("");
-        setShowinputField(true)
-      }, 5000); // Espera de 1 segundo
-  
-      return () => clearTimeout(timer); // Limpieza del temporizador al desmontar
+      const newHumanMessage: Message = {
+        id: `do-not-render-${uuidv4()}`,
+        type: "human",
+        content: "hola",
+      };
 
-  },[firstMessageRef])
+      const toolMessages = ensureToolCallsHaveResponses(stream.messages);
+      stream.submit(
+        { messages: [...toolMessages, newHumanMessage] },
+        {
+          config: { configurable: { user_id: 77, api_key: "123" } },
+          streamMode: ["values"],
+          optimisticValues: (prev) => ({
+            ...prev,
+            messages: [
+              ...(prev.messages ?? []),
+              ...toolMessages,
+              newHumanMessage,
+            ],
+          }),
+        },
+      );
+      firstMessageRef.current = 1;
+      setInput("");
+      setShowinputField(true);
+    }, 6000); // Espera de 1 segundo
+
+    return () => clearTimeout(timer); // Limpieza del temporizador al desmontar
+  }, [firstMessageRef]);
 
   useEffect(() => {
     if (!stream.error) {
@@ -222,7 +214,7 @@ const firstMessageRef = useRef(0);
     e.preventDefault();
     if (!input.trim() || isLoading) return;
     setFirstTokenReceived(false);
-   
+
     const newHumanMessage: Message = {
       id: uuidv4(),
       type: "human",
@@ -232,9 +224,9 @@ const firstMessageRef = useRef(0);
     const toolMessages = ensureToolCallsHaveResponses(stream.messages);
     stream.submit(
       { messages: [...toolMessages, newHumanMessage] },
-     
+
       {
-        config:{configurable:{user_id: 77, reference: reference }},
+        config: { configurable: { user_id: 77, reference: reference } },
         streamMode: ["values"],
         optimisticValues: (prev) => ({
           ...prev,
@@ -365,13 +357,13 @@ const firstMessageRef = useRef(0);
                   damping: 30,
                 }}
               > */}
-                {/* <LangGraphLogoSVG
+              {/* <LangGraphLogoSVG
                   width={32}
                   height={32}
                 /> */}
-                <span className="text-xl font-semibold tracking-tight">
-                  FaceApp
-                </span>
+              <span className="text-xl font-semibold tracking-tight">
+                FaceApp
+              </span>
               {/* </motion.button> */}
             </div>
 
@@ -437,13 +429,8 @@ const firstMessageRef = useRef(0);
                 )}
               </>
             }
-
-
-           
-
             footer={
               <div className="sticky bottom-0 flex flex-col items-center gap-8 bg-white">
-                
                 {/* {!chatStarted && (
                   <div className="flex flex-col items-center gap-3">
                    
@@ -455,75 +442,84 @@ const firstMessageRef = useRef(0);
                 )} */}
 
                 <ScrollToBottom className="animate-in fade-in-0 zoom-in-95 absolute bottom-full left-1/2 mb-4 -translate-x-1/2" />
-                
-               
-                  { !showinputField ? (
-                    <div className="sticky bottom-0 flex flex-col items-center gap-8 bg-white">
-                      <div className="flex flex-col items-center gap-3">
-                     
-                      <h1 className="text-2xl font-semibold text-center tracking-tight">
-                        Agent IA - FaceApp
-                      </h1>
-                      <p className="text-xl my-2 text-center">Gestión de suministro de Gas Naturgy</p>
-                      <p className="text-center">En un momento un asistente atenderá tu solicitud</p>
-                      <div><LoaderCircle  className="h-4 w-4 animate-spin"/></div>
-                    </div>
-                    
-                    </div>
-                  ):(
-                    <div className="bg-muted relative z-10 mx-auto mb-8 w-full max-w-3xl rounded-2xl border shadow-xs">
-                    <form
-                    onSubmit={handleSubmit}
-                    className="mx-auto grid max-w-3xl grid-rows-[1fr_auto] gap-2"
-                  >
-                    <textarea
-                      value={input}
-                      onChange={(e) => setInput(e.target.value)}
-                      onKeyDown={(e) => {
-                        if (
-                          e.key === "Enter" &&
-                          !e.shiftKey &&
-                          !e.metaKey &&
-                          !e.nativeEvent.isComposing
-                        ) {
-                          e.preventDefault();
-                          const el = e.target as HTMLElement | undefined;
-                          const form = el?.closest("form");
-                          form?.requestSubmit();
-                        }
-                      }}
-                      placeholder="Escribe tu mensaje..."
-                      className="field-sizing-content resize-none border-none bg-transparent p-3.5 pb-0 shadow-none ring-0 outline-none focus:ring-0 focus:outline-none"
-                    />
 
-                    <div className="flex items-center justify-between p-2 pt-4">
+                {!showinputField ? (
+                  <div className="sticky bottom-0 flex flex-col items-center gap-8 bg-white">
+                    <div className="flex flex-col items-center gap-3">
                       <div>
-                        <div className="flex items-center space-x-2">
-                        
-                        </div>
+                        <Image
+                          src={perfil_image}
+                          alt="Descripción de la imagen"
+                          width={150}
+                          height={150}
+                        />
                       </div>
-                      {stream.isLoading ? (
-                        <Button
-                          key="stop"
-                          onClick={() => stream.stop()}
-                        >
-                          <LoaderCircle className="h-4 w-4 animate-spin" />
-                          Cancel
-                        </Button>
-                      ) : (
-                        <Button
-                          type="submit"
-                          className="shadow-md transition-all"
-                          disabled={isLoading || !input.trim()}
-                        >
-                          Send
-                        </Button>
-                      )}
+                      <h1 className="text-center text-2xl font-semibold tracking-tight">
+                        Adriana - Agente IA
+                      </h1>
+                      <h2 className="text-xl">FaceApp</h2>
+                      <p className="my-2 text-center text-xl">
+                        Gestión de suministro de Gas Naturgy
+                      </p>
+                      <p className="text-center">
+                        En un momento un asistente atenderá tu solicitud
+                      </p>
+                      <div>
+                        <LoaderCircle className="h-4 w-4 animate-spin" />
+                      </div>
                     </div>
-                  </form>
                   </div>
-                  ) }
-                
+                ) : (
+                  <div className="bg-muted relative z-10 mx-auto mb-8 w-full max-w-3xl rounded-2xl border shadow-xs">
+                    <form
+                      onSubmit={handleSubmit}
+                      className="mx-auto grid max-w-3xl grid-rows-[1fr_auto] gap-2"
+                    >
+                      <textarea
+                        value={input}
+                        onChange={(e) => setInput(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (
+                            e.key === "Enter" &&
+                            !e.shiftKey &&
+                            !e.metaKey &&
+                            !e.nativeEvent.isComposing
+                          ) {
+                            e.preventDefault();
+                            const el = e.target as HTMLElement | undefined;
+                            const form = el?.closest("form");
+                            form?.requestSubmit();
+                          }
+                        }}
+                        placeholder="Escribe tu mensaje..."
+                        className="field-sizing-content resize-none border-none bg-transparent p-3.5 pb-0 shadow-none ring-0 outline-none focus:ring-0 focus:outline-none"
+                      />
+
+                      <div className="flex items-center justify-between p-2 pt-4">
+                        <div>
+                          <div className="flex items-center space-x-2"></div>
+                        </div>
+                        {stream.isLoading ? (
+                          <Button
+                            key="stop"
+                            onClick={() => stream.stop()}
+                          >
+                            <LoaderCircle className="h-4 w-4 animate-spin" />
+                            Cancel
+                          </Button>
+                        ) : (
+                          <Button
+                            type="submit"
+                            className="shadow-md transition-all"
+                            disabled={isLoading || !input.trim()}
+                          >
+                            Send
+                          </Button>
+                        )}
+                      </div>
+                    </form>
+                  </div>
+                )}
               </div>
             }
           />
