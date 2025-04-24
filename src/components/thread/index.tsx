@@ -16,7 +16,7 @@ import {
 import { LangGraphLogoSVG } from "../icons/langgraph";
 import { TooltipIconButton } from "./tooltip-icon-button";
 import Image from "next/image";
-
+import naturgy_logo from "../../../assets/naturgy.png";
 import {
   ArrowDown,
   LoaderCircle,
@@ -32,6 +32,7 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { Label } from "../ui/label";
 import { Switch } from "../ui/switch";
 import { GitHubSVG } from "../icons/github";
+import WhatsappAhare from "../icons/whatsapp";
 import {
   Tooltip,
   TooltipContent,
@@ -163,7 +164,7 @@ export function Thread() {
       firstMessageRef.current = 1;
       setInput("");
       setShowinputField(true);
-    }, 6000); // Espera de 1 segundo
+    }, 10000); // Espera de 1 segundo
 
     return () => clearTimeout(timer); // Limpieza del temporizador al desmontar
   }, [firstMessageRef]);
@@ -308,7 +309,7 @@ export function Thread() {
         {!chatStarted && (
           <div className="absolute top-0 left-0 z-10 flex w-full items-center justify-between gap-3 p-2 pl-4">
             <div>
-              {(!chatHistoryOpen || !isLargeScreen) && (
+              {/* {(!chatHistoryOpen || !isLargeScreen) && (
                 <Button
                   className="hover:bg-gray-100"
                   variant="ghost"
@@ -320,7 +321,7 @@ export function Thread() {
                     <PanelRightClose className="size-5" />
                   )}
                 </Button>
-              )}
+              )} */}
             </div>
             <div className="absolute top-2 right-4 flex items-center">
               {/* <OpenGitHubRepo /> */}
@@ -362,13 +363,21 @@ export function Thread() {
                   height={32}
                 /> */}
               <span className="text-xl font-semibold tracking-tight">
-                FaceApp
+                <Image
+                  src={naturgy_logo}
+                  alt="Naturgy Logo"
+                  width={100}
+                  height={100}
+                  className="mx-6"
+                />
               </span>
               {/* </motion.button> */}
             </div>
 
             <div className="flex items-center gap-4">
               <div className="flex items-center">
+                <WhatsappAhare />
+
                 {/* <OpenGitHubRepo /> */}
               </div>
               {/* <TooltipIconButton
@@ -444,14 +453,15 @@ export function Thread() {
                 <ScrollToBottom className="animate-in fade-in-0 zoom-in-95 absolute bottom-full left-1/2 mb-4 -translate-x-1/2" />
 
                 {!showinputField ? (
-                  <div className="sticky bottom-0 flex flex-col items-center gap-8 bg-white">
+                  <div className="bottom-0 flex h-dvh flex-col items-center gap-8 bg-white">
                     <div className="flex flex-col items-center gap-3">
-                      <div>
+                      <div className="">
                         <Image
                           src={perfil_image}
                           alt="Descripción de la imagen"
-                          width={150}
-                          height={150}
+                          width={170}
+                          height={170}
+                          className=""
                         />
                       </div>
                       <h1 className="text-center text-2xl font-semibold tracking-tight">
@@ -468,6 +478,9 @@ export function Thread() {
                         <LoaderCircle className="h-4 w-4 animate-spin" />
                       </div>
                     </div>
+                    <p className="mt-8 text-center text-sm text-gray-400">
+                      Powered by WinWinSaaS
+                    </p>
                   </div>
                 ) : (
                   <div className="bg-muted relative z-10 mx-auto mb-8 w-full max-w-3xl rounded-2xl border shadow-xs">
@@ -517,9 +530,15 @@ export function Thread() {
                           </Button>
                         )}
                       </div>
+                    
                     </form>
+                   
                   </div>
+                  
                 )}
+                 <p className="absolute bottom-1 text-center text-xs text-gray-400">
+                      Powered by WinWinSaaS
+                    </p>
               </div>
             }
           />
