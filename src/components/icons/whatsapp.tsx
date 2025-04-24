@@ -14,9 +14,9 @@ Dile adiós al tanque ⛔ y pásate al gas natural con este enlace`);
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-block rounded bg-[#f7941d] px-2 py-2 text-sm font-semibold text-black transition-colors duration-200 hover:bg-[#e07f12]"
+      className="flex items-center gap-2 bg-[#eee] rounded px-2  text-sm font-semibold text-black transition-colors duration-200 hover:bg-[#e07f12]"
     >
-      Compártelo en WhatsApp 👉
+      Compártelo<WhatsappIcon className="rounded-full h-[35px] w-[25px]"/>
     </a>
   );
 };

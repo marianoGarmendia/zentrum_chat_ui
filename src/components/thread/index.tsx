@@ -261,7 +261,7 @@ export function Thread() {
   );
 
   return (
-    <div className="flex h-screen w-full overflow-hidden">
+    <div className="flex h-dvh w-full overflow-hidden">
       <div className="relative hidden lg:flex">
         <motion.div
           className="absolute z-20 h-full overflow-hidden border-r bg-white"
@@ -307,7 +307,7 @@ export function Thread() {
         }
       >
         {!chatStarted && (
-          <div className="absolute top-0 left-0 z-10 flex w-full items-center justify-between gap-3 p-2 pl-4">
+          <div className="absolute  top-0 left-0 z-10 flex  w-full items-center justify-between gap-3 p-2 pl-4">
             <div>
               {/* {(!chatHistoryOpen || !isLargeScreen) && (
                 <Button
@@ -368,7 +368,7 @@ export function Thread() {
                   alt="Naturgy Logo"
                   width={100}
                   height={100}
-                  className="mx-6"
+                  className="mx-2"
                 />
               </span>
               {/* </motion.button> */}
@@ -399,7 +399,7 @@ export function Thread() {
           <StickyToBottomContent
             className={cn(
               "absolute inset-0 overflow-y-scroll px-4 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-track]:bg-transparent",
-              !chatStarted && "mt-[25vh] flex flex-col items-stretch",
+              !chatStarted && "mt-[5vh] flex flex-col items-stretch",
               chatStarted && "grid grid-rows-[1fr_auto]",
             )}
             contentClassName="pt-8 pb-16  max-w-3xl mx-auto flex flex-col gap-4 w-full"
@@ -439,7 +439,7 @@ export function Thread() {
               </>
             }
             footer={
-              <div className="sticky bottom-0 flex flex-col items-center gap-8 bg-white">
+              <div className="sticky bottom-0 flex flex-col items-center gap-4 bg-white">
                 {/* {!chatStarted && (
                   <div className="flex flex-col items-center gap-3">
                    
@@ -453,9 +453,16 @@ export function Thread() {
                 <ScrollToBottom className="animate-in fade-in-0 zoom-in-95 absolute bottom-full left-1/2 mb-4 -translate-x-1/2" />
 
                 {!showinputField ? (
-                  <div className="bottom-0 flex h-dvh flex-col items-center gap-8 bg-white">
+                  <div className="flex  top-0 flex-col items-center gap-4  bg-white">
                     <div className="flex flex-col items-center gap-3">
-                      <div className="">
+                      <div className="flex flex-col items-center">
+                        <Image
+                          src={naturgy_logo}
+                          alt="Naturgy Logo"
+                          width={150}
+                          height={150}
+                          className="mx-6"
+                        />
                         <Image
                           src={perfil_image}
                           alt="Descripción de la imagen"
@@ -464,13 +471,20 @@ export function Thread() {
                           className=""
                         />
                       </div>
-                      <h1 className="text-center text-2xl font-semibold tracking-tight">
-                        Adriana - Agente IA
-                      </h1>
-                      <h2 className="text-xl">FaceApp</h2>
-                      <p className="my-2 text-center text-xl">
-                        Gestión de suministro de Gas Naturgy
-                      </p>
+                      <div className="flex items-center gap-2 py-2 text-center">
+                        <h1 className="text-2xl font-bold text-gray-800">
+                          Adriana W.S
+                        </h1>
+                        <p className="text-xl text-gray-700">Agente IA</p>
+                      </div>
+
+                      <div className="mx-4 mb-6 rounded-lg bg-[#004976] p-6 text-white">
+                        <p className="text-md mb-2 text-center last:mb-0">
+                          Especialista de Energía en FaceApp Int. Distribuidor
+                          Oficial de la Gestión de suministro de Gas Natural
+                          Naturgy en casa.
+                        </p>
+                      </div>
                       <p className="text-center">
                         En un momento un asistente atenderá tu solicitud
                       </p>
@@ -478,7 +492,7 @@ export function Thread() {
                         <LoaderCircle className="h-4 w-4 animate-spin" />
                       </div>
                     </div>
-                    <p className="mt-8 text-center text-sm text-gray-400">
+                    <p className=" text-center text-sm text-gray-400">
                       Powered by WinWinSaaS
                     </p>
                   </div>
@@ -530,15 +544,17 @@ export function Thread() {
                           </Button>
                         )}
                       </div>
-                    
                     </form>
-                   
-                  </div>
                   
+                  </div>
                 )}
-                 <p className="absolute bottom-1 text-center text-xs text-gray-400">
-                      Powered by WinWinSaaS
-                    </p>
+               {
+                chatStarted && (
+                  <p className="absolute bottom-1 text-center text-xs text-gray-400">
+                  Powered by WinWinSaaS
+                </p>
+                )
+               }
               </div>
             }
           />
