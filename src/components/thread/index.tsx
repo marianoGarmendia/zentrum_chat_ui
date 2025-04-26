@@ -2,7 +2,6 @@ import { v4 as uuidv4 } from "uuid";
 import { ReactNode, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { Loader2 } from "lucide-react";
 import { useStreamContext } from "@/providers/Stream";
 import { useState, FormEvent } from "react";
 import { Button } from "../ui/button";
@@ -13,32 +12,18 @@ import {
   DO_NOT_RENDER_ID_PREFIX,
   ensureToolCallsHaveResponses,
 } from "@/lib/ensure-tool-responses";
-import { LangGraphLogoSVG } from "../icons/langgraph";
-import { TooltipIconButton } from "./tooltip-icon-button";
+
 import Image from "next/image";
-import naturgy_logo from "../../../assets/naturgy.png";
-import {
-  ArrowDown,
-  LoaderCircle,
-  PanelRightOpen,
-  PanelRightClose,
-  SquarePen,
-} from "lucide-react";
+import { ArrowDown, LoaderCircle } from "lucide-react";
 import { useQueryState, parseAsBoolean } from "nuqs";
 import { StickToBottom, useStickToBottomContext } from "use-stick-to-bottom";
 import ThreadHistory from "./history";
 import { toast } from "sonner";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
-import { Label } from "../ui/label";
-import { Switch } from "../ui/switch";
-import { GitHubSVG } from "../icons/github";
+
 import WhatsappAhare from "../icons/whatsapp";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "../ui/tooltip";
+
+import naturgy_logo from "../../../assets/naturgy_logo_text-removebg.png";
 import * as perfil_image from "../../../assets/agent_perfil.jpeg";
 
 function StickyToBottomContent(props: {
@@ -149,7 +134,7 @@ export function Thread() {
       stream.submit(
         { messages: [...toolMessages, newHumanMessage] },
         {
-          config: { configurable: { user_id: 77, api_key: "123" } },
+          config: { configurable: { user_id: uuidv4(), api_key: "123" } },
           streamMode: ["values"],
           optimisticValues: (prev) => ({
             ...prev,
@@ -307,7 +292,7 @@ export function Thread() {
         }
       >
         {!chatStarted && (
-          <div className="absolute  top-0 left-0 z-10 flex  w-full items-center justify-between gap-3 p-2 pl-4">
+          <div className="absolute top-0 left-0 z-10 flex w-full items-center justify-between gap-3 p-2 pl-4">
             <div>
               {/* {(!chatHistoryOpen || !isLargeScreen) && (
                 <Button
@@ -453,7 +438,7 @@ export function Thread() {
                 <ScrollToBottom className="animate-in fade-in-0 zoom-in-95 absolute bottom-full left-1/2 mb-4 -translate-x-1/2" />
 
                 {!showinputField ? (
-                  <div className="flex  top-0 flex-col items-center gap-4  bg-white">
+                  <div className="top-0 flex flex-col items-center gap-4 bg-white">
                     <div className="flex flex-col items-center gap-3">
                       <div className="flex flex-col items-center">
                         <Image
@@ -478,21 +463,22 @@ export function Thread() {
                         <p className="text-xl text-gray-700">Agente IA</p>
                       </div>
 
-                      <div className="mx-4 mb-6 rounded-lg bg-[#004976] p-6 text-white">
+                      <div className="mx-4 mb-6 rounded-lg bg-[#004571] p-6 text-white">
                         <p className="text-md mb-2 text-center last:mb-0">
-                          Especialista de Energía en FaceApp Int. Distribuidor
-                          Oficial de la Gestión de suministro de Gas Natural
-                          Naturgy en casa.
+                          Especialista de Energía en FaceApp Int. Empresa de
+                          Servicios Especiales Gestión de suministro de Gas
+                          Natural en casa
                         </p>
                       </div>
                       <p className="text-center">
-                        En un momento un asistente atenderá tu solicitud
+                        En un momento tu Agente Adriana atenderá tu
+                        solicitud{" "}
                       </p>
                       <div>
                         <LoaderCircle className="h-4 w-4 animate-spin" />
                       </div>
                     </div>
-                    <p className=" text-center text-sm text-gray-400">
+                    <p className="text-center text-sm text-gray-400">
                       Powered by WinWinSaaS
                     </p>
                   </div>
@@ -537,24 +523,21 @@ export function Thread() {
                         ) : (
                           <Button
                             type="submit"
-                            className="shadow-md transition-all"
+                            className="shadow-md transition-all bg-[#e57200]"
                             disabled={isLoading || !input.trim()}
                           >
-                            Send
+                            Enviar
                           </Button>
                         )}
                       </div>
                     </form>
-                  
                   </div>
                 )}
-               {
-                chatStarted && (
+                {chatStarted && (
                   <p className="absolute bottom-1 text-center text-xs text-gray-400">
-                  Powered by WinWinSaaS
-                </p>
-                )
-               }
+                    Powered by WinWinSaaS
+                  </p>
+                )}
               </div>
             }
           />
