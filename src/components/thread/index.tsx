@@ -24,6 +24,7 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 import WhatsappAhare from "../icons/whatsapp";
 
 import naturgy_logo from "../../../assets/naturgy_logo_text-removebg.png";
+import naturgy_logo_chat from "../../../assets/naturgy.png";
 import * as perfil_image from "../../../assets/agent_perfil.jpeg";
 
 function StickyToBottomContent(props: {
@@ -349,7 +350,7 @@ export function Thread() {
                 /> */}
               <span className="text-xl font-semibold tracking-tight">
                 <Image
-                  src={naturgy_logo}
+                  src={naturgy_logo_chat}
                   alt="Naturgy Logo"
                   width={100}
                   height={100}
@@ -518,7 +519,7 @@ export function Thread() {
                             onClick={() => stream.stop()}
                           >
                             <LoaderCircle className="h-4 w-4 animate-spin" />
-                            Cancel
+                            Cancelar
                           </Button>
                         ) : (
                           <Button
