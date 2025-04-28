@@ -111,7 +111,7 @@ export function ThreadActionsView({
           {threadId && <ThreadIdCopyable threadId={threadId} />}
         </div>
         <div className="flex flex-row items-center justify-start gap-2">
-          {apiUrl && (
+          {/* {apiUrl && (
             <Button
               size="sm"
               variant="outline"
@@ -120,7 +120,7 @@ export function ThreadActionsView({
             >
               Studio
             </Button>
-          )}
+          )} */}
           <ButtonGroup
             handleShowState={() => handleShowSidePanel(true, false)}
             handleShowDescription={() => handleShowSidePanel(false, true)}
@@ -131,7 +131,7 @@ export function ThreadActionsView({
       </div>
 
       <div className="flex w-full flex-row items-center justify-start gap-2">
-        <Button
+        {/* <Button
           variant="outline"
           className="border-gray-500 bg-white font-normal text-gray-800"
           onClick={handleResolve}
@@ -148,7 +148,7 @@ export function ThreadActionsView({
           >
             Ignore
           </Button>
-        )}
+        )} */}
       </div>
 
       {/* Actions */}

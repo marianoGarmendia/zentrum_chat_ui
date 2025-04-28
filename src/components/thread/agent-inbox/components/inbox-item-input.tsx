@@ -274,9 +274,11 @@ function EditAndOrAcceptComponent({
           defaultRows.current[k as keyof typeof defaultRows.current] ===
           undefined
         ) {
-          defaultRows.current[k as keyof typeof defaultRows.current] = !v.length
+          const safeValue = (v ?? "").toString(); // Si v es null o undefined, lo convierto a string vacío
+
+          defaultRows.current[k as keyof typeof defaultRows.current] = safeValue.length
             ? 3
-            : Math.max(v.length / 30, 7);
+            : Math.max(safeValue.length / 30, 7);
         }
         const numRows =
           defaultRows.current[k as keyof typeof defaultRows.current] || 8;
@@ -505,7 +507,7 @@ export function InboxItemInput({
           onEditChange={onEditChange}
           handleSubmit={handleSubmit}
         />
-        {supportsMultipleMethods ? (
+        {/* {supportsMultipleMethods ? (
           <div className="mx-auto mt-3 flex items-center gap-3">
             <Separator className="w-[full]" />
             <p className="text-sm text-gray-500">Or</p>
@@ -525,7 +527,7 @@ export function InboxItemInput({
           <p className="text-base font-medium text-green-600">
             Successfully finished Graph invocation.
           </p>
-        )}
+        )} */}
       </div>
     </div>
   );
