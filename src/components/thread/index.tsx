@@ -23,9 +23,10 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 import WhatsappAhare from "../icons/whatsapp";
 
-import naturgy_logo from "../../../assets/naturgy_logo_text-removebg.png";
-import naturgy_logo_chat from "../../../assets/naturgy.png";
-import * as perfil_image from "../../../assets/agent_perfil.jpeg";
+// import naturgy_logo from "../../../assets/naturgy_logo_text-removebg.png";
+// import naturgy_logo_chat from "../../../assets/naturgy.png";
+import perfil_image from "../../../assets/agent_perfil.jpeg";
+import zentrum_logo from "../../../assets/zentrum_logo.png";
 
 function StickyToBottomContent(props: {
   content: ReactNode;
@@ -150,7 +151,7 @@ export function Thread() {
       firstMessageRef.current = 1;
       setInput("");
       setShowinputField(true);
-    }, 10000); // Espera de 1 segundo
+    }, 3000); // Espera de 1 segundo
 
     return () => clearTimeout(timer); // Limpieza del temporizador al desmontar
   }, [firstMessageRef]);
@@ -350,11 +351,11 @@ export function Thread() {
                 /> */}
               <span className="text-xl font-semibold tracking-tight">
                 <Image
-                  src={naturgy_logo_chat}
+                  src={zentrum_logo}
                   alt="Naturgy Logo"
-                  width={100}
-                  height={100}
-                  className="mx-2"
+                  width={200}
+                  height={200}
+                  className="mx-2 bg-gray-400 "
                 />
               </span>
               {/* </motion.button> */}
@@ -443,36 +444,34 @@ export function Thread() {
                     <div className="flex flex-col items-center gap-3">
                       <div className="flex flex-col items-center">
                         <Image
-                          src={naturgy_logo}
+                          src={zentrum_logo}
                           alt="Naturgy Logo"
-                          width={150}
-                          height={150}
-                          className="mx-6"
+                          width={250}
+                          height={250}
+                          className="mx-6 bg-gray-400"
                         />
-                        <Image
+                        {/* <Image
                           src={perfil_image}
                           alt="Descripción de la imagen"
                           width={170}
                           height={170}
                           className=""
-                        />
+                        /> */}
                       </div>
                       <div className="flex items-center gap-2 py-2 text-center">
                         <h1 className="text-2xl font-bold text-gray-800">
-                          Adriana W.S
+                          Zen
                         </h1>
                         <p className="text-xl text-gray-700">Agente IA</p>
                       </div>
 
                       <div className="mx-4 mb-6 rounded-lg bg-[#004571] p-6 text-white">
                         <p className="text-md mb-2 text-center last:mb-0">
-                          Especialista de Energía en FaceApp Int. Empresa de
-                          Servicios Especiales Gestión de suministro de Gas
-                          Natural en casa
+                          Especialista en autos seminuevos de Zentrum
                         </p>
                       </div>
                       <p className="text-center">
-                        En un momento tu Agente Adriana atenderá tu
+                        En un momento tu Agente atenderá tu
                         solicitud{" "}
                       </p>
                       <div>
@@ -480,7 +479,7 @@ export function Thread() {
                       </div>
                     </div>
                     <p className="text-center text-sm text-gray-400">
-                      Powered by WinWinSaaS
+                      Powered by laCalle AI
                     </p>
                   </div>
                 ) : (
@@ -536,7 +535,7 @@ export function Thread() {
                 )}
                 {chatStarted && (
                   <p className="absolute bottom-1 text-center text-xs text-gray-400">
-                    Powered by WinWinSaaS
+                    Powered by laCalle AI
                   </p>
                 )}
               </div>

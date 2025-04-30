@@ -1,11 +1,9 @@
 import { WhatsappShareButton, WhatsappIcon } from "next-share";
 
 const WhatsappAhare = () => {
-  const mensaje = encodeURIComponent(`¡Ya tengo gas natural en casa! ✅
-Fue facilísimo y quiero compartirlo contigo.
-Dile adiós al tanque ⛔ y pásate al gas natural con este enlace`);
+  const mensaje = encodeURIComponent(`Encontrá los mejores seminuevos en Zentrum`);
   const enlaceGrupo = encodeURIComponent(
-    "https://chatbots.techbank.ai/faceapp/",
+    "https://www.seminuevoszentrum.cl/",
   );
   const url = `https://wa.me/?text=${mensaje}%20${enlaceGrupo}`;
 
