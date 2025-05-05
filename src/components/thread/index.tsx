@@ -25,8 +25,8 @@ import WhatsappAhare from "../icons/whatsapp";
 
 // import naturgy_logo from "../../../assets/naturgy_logo_text-removebg.png";
 // import naturgy_logo_chat from "../../../assets/naturgy.png";
-import perfil_image from "../../../assets/agent_perfil.jpeg";
-import zentrum_logo from "../../../assets/zentrum_logo.png";
+// import perfil_image from "../../../assets/agent_perfil.jpeg";
+// import zentrum_logo from "../../../assets/zentrum_logo.png";
 
 function StickyToBottomContent(props: {
   content: ReactNode;
@@ -350,13 +350,13 @@ export function Thread() {
                   height={32}
                 /> */}
               <span className="text-xl font-semibold tracking-tight">
-                <Image
+                {/* <Image
                   src={zentrum_logo}
                   alt="Naturgy Logo"
                   width={200}
                   height={200}
                   className="mx-2 bg-gray-400 "
-                />
+                /> */}
               </span>
               {/* </motion.button> */}
             </div>
@@ -443,13 +443,13 @@ export function Thread() {
                   <div className="top-0 flex flex-col items-center gap-4 bg-white">
                     <div className="flex flex-col items-center gap-3">
                       <div className="flex flex-col items-center">
-                        <Image
+                        {/* <Image
                           src={zentrum_logo}
                           alt="Naturgy Logo"
                           width={250}
                           height={250}
                           className="mx-6 bg-gray-400"
-                        />
+                        /> */}
                         {/* <Image
                           src={perfil_image}
                           alt="Descripción de la imagen"
@@ -467,7 +467,7 @@ export function Thread() {
 
                       <div className="mx-4 mb-6 rounded-lg bg-[#004571] p-6 text-white">
                         <p className="text-md mb-2 text-center last:mb-0">
-                          Especialista en autos seminuevos de Zentrum
+                          Especialista en autos usados en venta
                         </p>
                       </div>
                       <p className="text-center">

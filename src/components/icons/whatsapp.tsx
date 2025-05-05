@@ -1,9 +1,9 @@
 import { WhatsappShareButton, WhatsappIcon } from "next-share";
 
 const WhatsappAhare = () => {
-  const mensaje = encodeURIComponent(`Encontrá los mejores seminuevos en Zentrum`);
+  const mensaje = encodeURIComponent(`Encontrá los mejores autos! en autonova`);
   const enlaceGrupo = encodeURIComponent(
-    "https://www.seminuevoszentrum.cl/",
+    "https://www.autonova.cl/",
   );
   const url = `https://wa.me/?text=${mensaje}%20${enlaceGrupo}`;
 
