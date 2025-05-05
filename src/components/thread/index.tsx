@@ -467,7 +467,7 @@ export function Thread() {
 
                       <div className="mx-4 mb-6 rounded-lg bg-[#004571] p-6 text-white">
                         <p className="text-md mb-2 text-center last:mb-0">
-                          Especialista en autos usados en venta
+                          Especialista en autos usados en venta de Autonova
                         </p>
                       </div>
                       <p className="text-center">
