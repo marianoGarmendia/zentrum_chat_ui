@@ -523,7 +523,7 @@ export function Thread() {
                         ) : (
                           <Button
                             type="submit"
-                            className="shadow-md transition-all bg-[#e57200]"
+                            className="shadow-md transition-all bg-[#6CB64E]"
                             disabled={isLoading || !input.trim()}
                           >
                             Enviar
